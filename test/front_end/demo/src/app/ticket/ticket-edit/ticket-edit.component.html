@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add New Ticket</title>
+</head>
+<body>
+<section class="wrapper">
+  <div class="top">Ticket</div>
+  <div class="bottom" aria-hidden="true">Ticket</div>
+</section>
+<div style="background-image: url('https://resortmcgroup.com/images/about-bg.png');margin-top: 50px">
+  <div>
+    <button class="back" routerLink=""
+            style="width: 20%;font-size: 20px ;font-weight: bold;margin-left: 25px; text-decoration: none; text-align: center">
+      Back To Page Ticket
+    </button>
+  </div>
+  <div class="container-fluid" style="margin-bottom: 50px">
+    <div class="row">
+      <div class="col-3">
+        <div class="row">
+          <div class="col-12">
+            <img src="assets\img\wc.jpg" style="width: 250px; height: 450px">
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="d-flex justify-content-center w-100">
+          <form *ngIf="rfTicket" [formGroup]="rfTicket" (ngSubmit)="onSubmit()" id="form" class="w-100">
+            <div>
+              <div>
+                <input type="number" formControlName="status" hidden>
+                <label>Local From</label>
+                <input formControlName="localFrom" type="text"
+                       [ngClass]="rfTicket.errors?.checkMatch||rfTicket.controls['localFrom'].invalid?'is-invalid':'is-valid'">
+                <div class="invalid-feedback">
+                  <div
+                    *ngIf="rfTicket.controls['localFrom'].errors?.required && rfTicket.controls['localFrom'].touched">
+                    Please provide a Local From.
+                  </div>
+                  <div *ngIf="rfTicket.errors?.checkMatch && rfTicket.controls['localFrom'].touched">
+                    Local To and Local From have been created
+                  </div>
+                  <div
+                    *ngIf="rfTicket.controls['localFrom'].errors?.pattern && rfTicket.controls['localFrom'].touched">
+                    Name must be in the correct format (Nguyễn Ngọc A)
+                  </div>
+                </div>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+
+              <div>
+                <label>Local To</label>
+                <input formControlName="localTo" type="text"
+                       [ngClass]="rfTicket.errors?.checkLocalTo||rfTicket.errors?.checkMatch||rfTicket.controls['localTo'].invalid?'is-invalid':'is-valid'">
+                <div class="invalid-feedback">
+                  <div *ngIf="rfTicket.controls['localTo'].errors?.required && rfTicket.controls['localTo'].touched">
+                    Please provide a Local To.
+                  </div>
+                  <div *ngIf="rfTicket.errors?.checkLocalTo && rfTicket.controls['localTo'].touched">
+                    Local To cannot match Local From.
+                  </div>
+                  <div *ngIf="rfTicket.errors?.checkMatch && rfTicket.controls['localTo'].touched">
+                    Local To and Local From have been created
+                  </div>
+                  <div
+                    *ngIf="rfTicket.controls['localTo'].errors?.pattern && rfTicket.controls['localTo'].touched">
+                    Name must be in the correct format (Nguyễn Ngọc A)
+                  </div>
+                </div>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+
+              <div>
+                <label>Garage</label>
+                <select formControlName="garage"
+                        [ngClass]="rfTicket.errors?.checkMatch||rfTicket.controls['garage'].invalid?'is-invalid':'is-valid'">
+                  <option *ngFor="let item of garageList" [value]="item.id">{{item.name}}</option>
+                </select>
+                <div class="invalid-feedback">
+                  <div *ngIf="rfTicket.controls['garage'].errors?.required">
+                    Please provide a Garage
+                  </div>
+                  <div *ngIf="rfTicket.errors?.checkMatch">
+                    Local To and Local From have been created
+                  </div>
+                </div>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+
+              <div>
+                <label>Day From</label>
+                <input formControlName="dayFrom" type="date"
+                       [ngClass]="rfTicket.errors?.checkDayFrom||rfTicket.controls['dayFrom'].invalid?'is-invalid':'is-valid'">
+                <div class="invalid-feedback">
+                  <div *ngIf="rfTicket.controls['dayFrom'].errors?.required && rfTicket.controls['dayFrom'].touched">
+                    Please provide a Day From.
+                  </div>
+                  <div *ngIf="rfTicket.errors?.checkDayFrom && rfTicket.controls['dayFrom'].touched">
+                    Day From must be in the correct format (Day From > Day Now).
+                  </div>
+                </div>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+
+              <div>
+                <label>Hour From</label>
+                <input formControlName="hourFrom" type="time"
+                       [ngClass]="rfTicket.controls['hourFrom'].invalid?'is-invalid':'is-valid'">
+                <div class="invalid-feedback">
+                  <div *ngIf="rfTicket.controls['hourFrom'].errors?.required && rfTicket.controls['hourFrom'].touched">
+                    Please provide a Hour From.
+                  </div>
+                </div>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+
+
+              <div>
+                <label>Quantity</label>
+                <input formControlName="quantity" type="number"
+                       [ngClass]="rfTicket.errors?.checkQuantity || rfTicket.controls['quantity'].invalid? 'is-invalid': 'is-valid'">
+                <div class="invalid-feedback">
+                  <div *ngIf="rfTicket.controls['quantity'].errors?.required && rfTicket.controls['quantity'].touched">
+                    Please provide a Quantity.
+                  </div>
+                  <div *ngIf="rfTicket.errors?.checkQuantity && rfTicket.controls['quantity'].touched">
+                    Quantity must be in the correct format (quantity > 0).
+                  </div>
+                </div>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+
+              <div>
+                <label>Price</label>
+                <input formControlName="price" type="number"
+                       [ngClass]="rfTicket.errors?.checkPrice || rfTicket.controls['price'].invalid?'is-invalid':'is-valid'">
+                <div class="invalid-feedback">
+                  <div *ngIf="rfTicket.controls['price'].errors?.required && rfTicket.controls['price'].touched">
+                    Please provide a Price.
+                  </div>
+                  <div *ngIf="rfTicket.errors?.checkPrice && rfTicket.controls['price'].touched">
+                    Price must be in the correct format (price > 0).
+                  </div>
+                </div>
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+              </div>
+
+
+              <div class="d-flex justify-content-center">
+                <button type="submit" style="font-weight: bold;font-size: 20px" [disabled]="!rfTicket.valid">Edit
+                  Ticket
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="row">
+          <div class="col-12">
+            <img src="assets\img\la-eeb.png" style="width: 250px; height: 450px">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

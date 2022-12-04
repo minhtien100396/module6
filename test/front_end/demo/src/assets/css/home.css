@@ -1,0 +1,17 @@
+#navbarSupportedContent ul li a {
+  color: #e3e3e3;
+  font-weight: bold;
+}
+
+#navbarSupportedContent ul ul li:hover {
+  background: #e3e3e3;
+}
+
+#navbarSupportedContent ul ul {
+  background: #264e69;
+}
+
+#navbarSupportedContent ul li a:hover {
+  background: #e3e3e3;
+  color: #f8f9f8;
+}

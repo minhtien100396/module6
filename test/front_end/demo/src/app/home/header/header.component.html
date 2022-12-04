@@ -1,0 +1,78 @@
+<div style="background-image: url('https://resortmcgroup.com/images/about-bg.png')">
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container px-4 px-lg-5">
+      <a class="navbar-brand" routerLink="/home">TRANG CHỦ</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ms-auto me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              Khóa Học
+            </a>
+            <ul class="dropdown-menu" style="background: #e3e3e3">
+              <li><a class="dropdown-item" routerLink="/customer/list">Khóa Học Từ Xa</a></li>
+              <li>
+                <hr class="dropdown-divider bg-light">
+              </li>
+              <li><a class="dropdown-item" routerLink="/customer/create">Khóa Học Miễn Phí</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              Lịch Khai Giảng
+            </a>
+            <ul class="dropdown-menu" style="background: #e3e3e3">
+              <li><a class="dropdown-item" routerLink="/facility/list">Code Gym Huế</a></li>
+              <li>
+                <hr class="dropdown-divider bg-light">
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/facility/create">Code Gym Đà Nẵng</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              Tại Sao Nên Chọn CodeGym?
+            </a>
+            <ul class="dropdown-menu" style="background: #e3e3e3">
+              <li><a class="dropdown-item" routerLink="/contract/list">Chuyên Nghiệp</a></li>
+              <li>
+                <hr class="dropdown-divider bg-light">
+              </li>
+              <li><a class="dropdown-item" routerLink="/contract/create">Hiện Đại</a></li>
+              <li>
+                <hr class="dropdown-divider bg-light">
+              </li>
+              <li><a class="dropdown-item" routerLink="/contract/using">Đột Phá</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Masthead-->
+  <header class="masthead">
+    <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+      <div class="d-flex justify-content-center">
+        <div class="text-center">
+
+          <h1 class="mx-auto my-0 text-uppercase mb-3">CODE GYM</h1>
+          <div class="container-fluid d-flex justify-content-center ">
+            <img src="assets/img/CodeGym-Logo.webp" style="height:50px; line-height: 50px;color: white">
+          </div>
+          <h2 class="text-white-50 mx-auto mt-2 mb-5 mt-5">Code Gym Khởi Đầu Sự Nghiệp Mới</h2>
+          <a class="btn btn-primary" routerLink="/facility/list">Đăng Kí Ngay</a>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
