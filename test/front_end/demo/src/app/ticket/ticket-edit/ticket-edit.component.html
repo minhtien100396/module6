@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Add New Ticket</title>
+  <title>Edit Ticket</title>
 </head>
 <body>
 <section class="wrapper">
@@ -98,13 +98,16 @@
               <div>
                 <label>Day From</label>
                 <input formControlName="dayFrom" type="date"
-                       [ngClass]="rfTicket.errors?.checkDayFrom||rfTicket.controls['dayFrom'].invalid?'is-invalid':'is-valid'">
+                       [ngClass]="rfTicket.errors?.checkMatch||rfTicket.errors?.checkDayFrom||rfTicket.controls['dayFrom'].invalid?'is-invalid':'is-valid'">
                 <div class="invalid-feedback">
                   <div *ngIf="rfTicket.controls['dayFrom'].errors?.required && rfTicket.controls['dayFrom'].touched">
                     Please provide a Day From.
                   </div>
                   <div *ngIf="rfTicket.errors?.checkDayFrom && rfTicket.controls['dayFrom'].touched">
                     Day From must be in the correct format (Day From > Day Now).
+                  </div>
+                  <div *ngIf="rfTicket.errors?.checkMatch">
+                    Local To and Local From have been created
                   </div>
                 </div>
                 <div class="valid-feedback">
@@ -115,10 +118,13 @@
               <div>
                 <label>Hour From</label>
                 <input formControlName="hourFrom" type="time"
-                       [ngClass]="rfTicket.controls['hourFrom'].invalid?'is-invalid':'is-valid'">
+                       [ngClass]="rfTicket.errors?.checkMatch||rfTicket.controls['hourFrom'].invalid?'is-invalid':'is-valid'">
                 <div class="invalid-feedback">
                   <div *ngIf="rfTicket.controls['hourFrom'].errors?.required && rfTicket.controls['hourFrom'].touched">
                     Please provide a Hour From.
+                  </div>
+                  <div *ngIf="rfTicket.errors?.checkMatch">
+                    Local To and Local From have been created
                   </div>
                 </div>
                 <div class="valid-feedback">

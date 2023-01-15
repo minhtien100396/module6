@@ -1,88 +1,88 @@
-<div style="background: white">
-  <section class="wrapper">
-    <div class="top">Ticket</div>
-    <div class="bottom" aria-hidden="true">Ticket</div>
-  </section>
-  <p style="text-align: center;width: 100%;color:#0a53be;font-weight: bold">{{message}}</p>
+<!--<div style="background: white">-->
+<!--  <section class="wrapper">-->
+<!--    <div class="top">Ticket</div>-->
+<!--    <div class="bottom" aria-hidden="true">Ticket</div>-->
+<!--  </section>-->
+<!--  <p style="text-align: center;width: 100%;color:#0a53be;font-weight: bold">{{message}}</p>-->
 
-  <div style="background-image: url('https://resortmcgroup.com/images/about-bg.png')">
-    <div>
-      <button id="student-add" class="back" routerLink="/create">
-        Add New Ticket
-      </button>
-    </div>
-    <form *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="onSearch()" style="margin-top: 35px">
-      <input formControlName="localFrom" style="width: 10%;margin: 0px 20px 0px 20px" type="text"
-             placeholder="Local From .....">
-      <input formControlName="localTo" style="width: 10%;margin: 0px 20px 0px 10px" type="text"
-             placeholder="Local To .....">
-      <span style="font-weight: bold;font-size: 18px;margin-right: 10px">From:</span>
-      <input formControlName="dayFromFrom" type="date" style="width: 10%"
-             (change)="onSearch()">
-      <span style="font-weight: bold;font-size: 18px;margin:0px 10px">To:</span>
-      <input formControlName="dayFromTo" type="date" style="width: 10%"
-             (change)="onSearch()">
-      <span style="font-weight: bold;font-size: 18px;margin-left:10px">Garage:</span>
-      <select formControlName="garage" style="width: 10%;margin-left: 10px" (change)="onSearch()">
-        <option [value]="''">-- Choose --</option>
-        <option *ngFor="let item of garageList" [value]="item.id">{{item.name}}</option>
-      </select>
-      <button type="submit" style="width: 8%;font-size: 15px; font-weight: bold; margin-left: 20px">Search</button>
-    </form>
-  </div>
-  <div>
-    <table class="customers" style="margin-bottom: 30px">
-      <thead>
-      <tr>
-        <th>#</th>
-        <th>Local From</th>
-        <th>Local To</th>
-        <th>Price</th>
-        <th>Day From</th>
-        <th>Hour From</th>
-        <th>Garage</th>
-        <th>Quantity</th>
-        <th colspan="4" style="text-align: center">Activity</th>
-      </tr>
-      </thead>
+<!--  <div style="background-image: url('https://resortmcgroup.com/images/about-bg.png')">-->
+<!--    <div>-->
+<!--      <button id="student-add" class="back" routerLink="/create">-->
+<!--        Add New Ticket-->
+<!--      </button>-->
+<!--    </div>-->
+<!--    <form *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="onSearch()" style="margin-top: 35px">-->
+<!--      <input formControlName="localFrom" style="width: 10%;margin: 0px 20px 0px 20px" type="text"-->
+<!--             placeholder="Local From .....">-->
+<!--      <input formControlName="localTo" style="width: 10%;margin: 0px 20px 0px 10px" type="text"-->
+<!--             placeholder="Local To .....">-->
+<!--      <span style="font-weight: bold;font-size: 18px;margin-right: 10px">From:</span>-->
+<!--      <input formControlName="dayFromFrom" type="date" style="width: 10%"-->
+<!--             (change)="onSearch()">-->
+<!--      <span style="font-weight: bold;font-size: 18px;margin:0px 10px">To:</span>-->
+<!--      <input formControlName="dayFromTo" type="date" style="width: 10%"-->
+<!--             (change)="onSearch()">-->
+<!--      <span style="font-weight: bold;font-size: 18px;margin-left:10px">Garage:</span>-->
+<!--      <select formControlName="garage" style="width: 10%;margin-left: 10px" (change)="onSearch()">-->
+<!--        <option [value]="''">&#45;&#45; Choose &#45;&#45;</option>-->
+<!--        <option *ngFor="let item of garageList" [value]="item.id">{{item.name}}</option>-->
+<!--      </select>-->
+<!--      <button type="submit" style="width: 8%;font-size: 15px; font-weight: bold; margin-left: 20px">Search</button>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <table class="customers" style="margin-bottom: 30px">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>#</th>-->
+<!--        <th>Local From</th>-->
+<!--        <th>Local To</th>-->
+<!--        <th>Price</th>-->
+<!--        <th>Day From</th>-->
+<!--        <th>Hour From</th>-->
+<!--        <th>Garage</th>-->
+<!--        <th>Quantity</th>-->
+<!--        <th colspan="4" style="text-align: center">Activity</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
 
-      <tbody>
-      <tr *ngFor="let item of ticketList | paginate: {itemsPerPage:count,currentPage:p}; let i = index;">
-        <td>{{(i + 1)}}</td>
-        <td>{{item.localFrom|titlecase}}</td>
-        <td>{{item.localTo|titlecase}}</td>
-        <td>{{item.price}}</td>
-        <td>{{item.dayFrom| date:'dd/MM/y'}}</td>
-        <td>{{item.hourFrom}}</td>
-        <td>{{item.garage.name}}</td>
-        <td>{{item.quantity}}</td>
-        <td><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal"
-               (click)="sendToDetailModal(item.id)">View</a></td>
-        <td><a class="btn btn-warning" [routerLink]="['/edit',item.id]">Edit</a></td>
-        <td>
-          <!-- Button delete modal -->
-          <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                  data-bs-target="#deleteModal" (click)="getTicket(item.id)">
-            Delete
-          </button>
-        </td>
-        <td>
-          <!-- Button order modal -->
-          <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                  data-bs-target="#orderModal" (click)="getTicket(item.id)">
-            Order
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+<!--      <tbody>-->
+<!--      <tr *ngFor="let item of ticketList | paginate: {itemsPerPage:count,currentPage:p}; let i = index;">-->
+<!--        <td>{{(i + 1)}}</td>-->
+<!--        <td>{{item.localFrom|titlecase}}</td>-->
+<!--        <td>{{item.localTo|titlecase}}</td>-->
+<!--        <td>{{item.price}}</td>-->
+<!--        <td>{{item.dayFrom| date:'dd/MM/y'}}</td>-->
+<!--        <td>{{item.hourFrom}}</td>-->
+<!--        <td>{{item.garage.name}}</td>-->
+<!--        <td>{{item.quantity}}</td>-->
+<!--        <td><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal"-->
+<!--               (click)="sendToDetailModal(item.id)">View</a></td>-->
+<!--        <td><a class="btn btn-warning" [routerLink]="['/edit',item.id]">Edit</a></td>-->
+<!--        <td>-->
+<!--          &lt;!&ndash; Button delete modal &ndash;&gt;-->
+<!--          <button type="button" class="btn btn-danger" data-bs-toggle="modal"-->
+<!--                  data-bs-target="#deleteModal" (click)="getTicket(item.id)">-->
+<!--            Delete-->
+<!--          </button>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--          &lt;!&ndash; Button order modal &ndash;&gt;-->
+<!--          <button type="button" class="btn btn-success" data-bs-toggle="modal"-->
+<!--                  data-bs-target="#orderModal" (click)="getTicket(item.id)">-->
+<!--            Order-->
+<!--          </button>-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+<!--</div>-->
 
-<!--Including the pagination control.-->
-<div class="text-right" style="text-align: center">
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
-</div>
+<!--&lt;!&ndash;Including the pagination control.&ndash;&gt;-->
+<!--<div class="text-right" style="text-align: center">-->
+<!--  <pagination-controls (pageChange)="p = $event"></pagination-controls>-->
+<!--</div>-->
 
 <!-- Modal delete-->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
@@ -197,3 +197,90 @@
     </div>
   </div>
 </div>
+<p style="text-align: center;width: 100%;color:#0a53be;font-weight: bold">{{message}}</p>
+<div style="background-image: url('https://resortmcgroup.com/images/about-bg.png')">
+  <div>
+    <button id="student-add" class="back" routerLink="/create">
+      Add New Ticket
+    </button>
+  </div>
+  <form *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="onSearchAndPage()" style="margin-top: 35px">
+    <input formControlName="localFrom" style="width: 10%;margin: 0px 20px 0px 20px" type="text"
+           placeholder="Local From .....">
+    <input formControlName="localTo" style="width: 10%;margin: 0px 20px 0px 10px" type="text"
+           placeholder="Local To .....">
+    <span style="font-weight: bold;font-size: 18px;margin-right: 10px">From:</span>
+    <input formControlName="dayFromFrom" type="date" style="width: 10%"
+           (change)="onSearchAndPage()">
+    <span style="font-weight: bold;font-size: 18px;margin:0px 10px">To:</span>
+    <input formControlName="dayFromTo" type="date" style="width: 10%"
+           (change)="onSearchAndPage()">
+    <span style="font-weight: bold;font-size: 18px;margin-left:10px">Garage:</span>
+    <select formControlName="garage" style="width: 10%;margin-left: 10px" (change)="onSearchAndPage()">
+      <option [value]="''">-- Choose --</option>
+      <option *ngFor="let item of garageList" [value]="item.id">{{item.name}}</option>
+    </select>
+    <button type="submit" style="width: 8%;font-size: 15px; font-weight: bold; margin-left: 20px">Search</button>
+  </form>
+</div>
+<table class="customers" style="margin-bottom: 30px">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Local From</th>
+    <th>Local To</th>
+    <th>Price</th>
+    <th>Day From</th>
+    <th>Hour From</th>
+    <th>Garage</th>
+    <th>Quantity</th>
+    <th colspan="4" style="text-align: center">Activity</th>
+  </tr>
+  </thead>
+
+  <tbody *ngIf="ticketPage">
+  <tr *ngFor="let item of ticketPage.content; let i = index">
+    <td>{{(i + 1)}}</td>
+    <td>{{item.localFrom|titlecase}}</td>
+    <td>{{item.localTo|titlecase}}</td>
+    <td>{{item.price}}</td>
+    <td>{{item.dayFrom| date:'dd/MM/y'}}</td>
+    <td>{{item.hourFrom}}</td>
+    <td>{{item.garage.name}}</td>
+    <td>{{item.quantity}}</td>
+    <td><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal"
+           (click)="sendToDetailModal(item.id)">View</a></td>
+    <td><a class="btn btn-warning" [routerLink]="['/edit',item.id]">Edit</a></td>
+    <td>
+      <!-- Button delete modal -->
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+              data-bs-target="#deleteModal" (click)="getTicket(item.id)">
+        Delete
+      </button>
+    </td>
+    <td>
+      <!-- Button order modal -->
+      <button type="button" class="btn btn-success" data-bs-toggle="modal"
+              data-bs-target="#orderModal" (click)="getTicket(item.id)">
+        Order
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<nav aria-label="Page navigation example" class="d-flex justify-content-end">
+  <ul class="pagination" *ngIf="ticketPage">
+    <li class="page-item pointer" [ngClass]="ticketPage.number == 0 ? 'disabled': ''">
+      <span class="page-link" (click)="goToPage(ticketPage.number - 1)">Previous</span>
+    </li>
+    <li class="page-item pointer" *ngFor="let pageNumber of [].constructor(ticketPage.totalPages); let i = index"
+        [ngClass]="ticketPage.number == i ?'active': ''">
+      <span class="page-link" (click)="goToPage(i)">
+        {{i + 1}}
+      </span>
+    </li>
+    <li class="page-item pointer" [ngClass]="ticketPage.number + 1 == ticketPage.totalPages ? 'disabled': ''">
+      <span class="page-link" (click)="goToPage(ticketPage.number + 1)">Next</span>
+    </li>
+  </ul>
+</nav>

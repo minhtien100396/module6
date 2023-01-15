@@ -88,11 +88,14 @@ export class TicketEditComponent implements OnInit {
     const localFrom = control.get('localFrom').value;
     const localTo = control.get('localTo').value;
     const garageId = control.get('garage').value;
+    const dayFrom = control.get('dayFrom').value;
+    const hourFrom = control.get('hourFrom').value;
     let result = null;
     this.ticketListNew = this.ticketList.filter(value => value.id != this.ticketId);
     console.log(this.ticketListNew);
     this.ticketListNew.filter(valueNew => {
-      if (localFrom == valueNew.localFrom && localTo == valueNew.localTo && garageId == valueNew.garage.id) {
+      if (localFrom == valueNew.localFrom && localTo == valueNew.localTo
+        && garageId == valueNew.garage.id && dayFrom === valueNew.dayFrom && hourFrom === valueNew.hourFrom) {
         console.log('dđ')
         result = {"checkMatch": true};
       }

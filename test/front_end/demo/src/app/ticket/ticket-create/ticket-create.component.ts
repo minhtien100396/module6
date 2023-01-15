@@ -80,7 +80,8 @@ export class TicketCreateComponent implements OnInit {
               localTo: ['',
                 [Validators.required,
                   Validators.pattern('^[A-ZÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ](?:\'[A-ZÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ])*[a-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹý]*(?: [A-ZÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ](?:\'[A-ZÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ])*[a-zàáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹý]*)*$')
-                ]],
+                ]
+              ],
               garage: ['', [Validators.required]],
               dayFrom: ['', [Validators.required]],
               hourFrom: ['', [Validators.required]],
@@ -109,9 +110,12 @@ export class TicketCreateComponent implements OnInit {
     const localFrom = control.get('localFrom').value;
     const localTo = control.get('localTo').value;
     const garageId = control.get('garage').value.id;
-    let result = null;
+    const dayFrom = control.get('dayFrom').value;
+    const hourFrom = control.get('hourFrom').value;
+      let result = null;
     this.ticketList.filter(value => {
-      if (localFrom === value.localFrom && localTo === value.localTo && garageId === value.garage.id) {
+      if (localFrom === value.localFrom && localTo === value.localTo && garageId === value.garage.id
+        && dayFrom === value.dayFrom && hourFrom === value.hourFrom) {
         result = {"checkMatch": true};
       }
     })

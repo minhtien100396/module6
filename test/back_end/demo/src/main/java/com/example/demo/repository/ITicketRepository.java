@@ -1,6 +1,8 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.Ticket;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -38,4 +40,18 @@ public interface ITicketRepository extends JpaRepository<Ticket, Integer> {
 
     @Query(value = "select * from `ticket` where id=:idTicket and status = 1", nativeQuery = true)
     Optional<Ticket> findByIdTicket(@Param("idTicket") int idTicket);
+
+    @Query(value =
+            "select * from ticket where local_from " +
+            "like %:localFrom% " +
+            "and local_to like %:localTo% " +
+            "and garage_id like %:garageId% " +
+            "and date(day_from) between date(:dayFromFrom) " +
+            "and date(:dayFromTo) " +
+            "and status = 1", nativeQuery = true)
+    Page<Ticket> findAllPageAndSeach(@Param("localFrom") String localFrom,
+                                     @Param("localTo") String localTo,
+                                     @Param("dayFromFrom") String dayFromFrom,
+                                     @Param("dayFromTo") String dayFromTo,
+                                     @Param("garageId") String garageId, Pageable pageable);
 }

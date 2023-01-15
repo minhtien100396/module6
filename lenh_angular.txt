@@ -1,0 +1,11 @@
+netstat -a -n -o
+
+taskkill -f /pid 18976
+
+npm install -g create-typescript-project
+npm install -save bootstrap jquery
+
+npm i ngx-pagination@5.1.1
+npm install --save bootstrap jquery
+ng add @angular/material
+ng g c ten_component

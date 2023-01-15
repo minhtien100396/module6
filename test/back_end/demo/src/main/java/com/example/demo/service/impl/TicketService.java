@@ -4,6 +4,8 @@ import com.example.demo.model.Ticket;
 import com.example.demo.repository.ITicketRepository;
 import com.example.demo.service.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,5 +56,15 @@ public class TicketService implements ITicketService {
     @Override
     public List<Ticket> searchNotDayFromTo(String localFrom, String localTo, String dayFromFrom, String garageId) {
         return ticketRepository.searchNotDayFromTo(localFrom,localTo,dayFromFrom,garageId);
+    }
+
+    @Override
+    public Page<Ticket> findAllPage(Pageable pageable) {
+        return ticketRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Ticket> findAllPageAndSeach(String localFrom, String localTo, String dayFromFrom, String dayFromTo, String garageId, Pageable pageable) {
+        return ticketRepository.findAllPageAndSeach(localFrom, localTo, dayFromFrom, dayFromTo, garageId, pageable);
     }
 }

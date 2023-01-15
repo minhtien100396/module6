@@ -5,6 +5,11 @@ import com.example.demo.model.Ticket;
 import com.example.demo.service.ITicketService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -31,6 +36,22 @@ public class TicketRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(ticketList, HttpStatus.OK);
+    }
+
+    @GetMapping("/pg")
+    public ResponseEntity<Page<Ticket>> getListTicket(@RequestParam(value = "localFrom", defaultValue = "", required = false) String localFrom,
+                                                      @RequestParam(value = "localTo", defaultValue = "", required = false) String localTo,
+                                                      @RequestParam(value = "dayFromFrom", defaultValue = "", required = false) String dayFromFrom,
+                                                      @RequestParam(value = "dayFromTo", defaultValue = "", required = false) String dayFromTo,
+                                                      @RequestParam(value = "garageId", defaultValue = "", required = false) String garageId,
+                                                      @PageableDefault(value = 3) Pageable pageable) {
+
+//        Page<Ticket> ticketPage = ticketService.findAllPage(pageable);
+        Page<Ticket> ticketPage = ticketService.findAllPageAndSeach(localFrom, localTo, dayFromFrom, dayFromTo, garageId, pageable);
+        if (ticketPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(ticketPage, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -94,7 +115,7 @@ public class TicketRestController {
     @PostMapping
     public ResponseEntity add(@Valid @RequestBody TicketDto ticketDto) {
         Ticket ticket = new Ticket();
-        BeanUtils.copyProperties(ticketDto, ticket);
+            BeanUtils.copyProperties(ticketDto, ticket);
         ticketService.save(ticket);
         return new ResponseEntity(ticket, HttpStatus.CREATED);
     }

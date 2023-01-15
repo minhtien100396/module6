@@ -1,0 +1,72 @@
+------------PushNotification Firebase ------------------------
+
+1. https://console.firebase.google.com/u/1/
+2. Tạo một dự án
+3. Đặt tên cho dự án
+4. Xác nhận và đợi tạo
+5. Tạo xong thì chọn ứng dụng web
+6. Đặt tên ứng dụng : push_notification
+7.Lây được SDK Firebase (Software Development Kit):
+ Các công cụ và phần mêm dùng để phát triển ứng dụng thông qua một nền tẳng nhất định (firebase)
+*: thêm thư viện fire base vào: 
+
+npm install firebase @angular/fire --save
+npm install firebase --save
+npm audit fix (if any vulnerabilities found else ignore)
+
+
+8. tạo file json
+9. tạo đường dẫn file json trong index.html
+10. Tạo file firebase-messaging-sw.json
+11. Đăng kí 2 file vừa tạo trong angular.json (assets)
+
+12.Tạo một service message
+
+13. Viết code
+requestPermission() : Trình duyệt/thiết bị sẽ yêu cầu người dùng cho phép nhận thông báo. 
+Sau khi người dùng cấp quyền, firebase sẽ trả lại mã thông báo có thể sử dụng làm tham chiếu để gửi thông báo tới trình duyệt.
+receiveMessage() : Chức năng này sẽ được kích hoạt khi nhận được tin nhắn mới.
+
+
+14. Cung cấp một api trong enviroment
+
+15. Update component file
+  a. Update App Module File
+	(AsyncPipe: trả về giá trị mới nhất từ hàm không đồng bộ)
+b. Update AppComponent.ts
+c. Update AppComponent.html
+
+16. Chạy trình duyệt lên chọn cho phép hiển thị thông báo -> token được gửi về
+
+ a. Gửi tin nhắn dạng notification message thông qua Firebase Console
+
+b. Gửi data message từ một payload
+Việc gửi tin nhắn dưới dạng “data payload” này không được hỗ trợ từ Firebase Console, nó thường được gửi từ một phía server của ứng dụng.
+Server đó thường sẽ chứa thông tin token của các device, token này được gửi đến server khi chạy ứng dụng và server sử dụng thông tin token này 
+để gửi tin nhắn đến device cần thông báo. Quy trình gửi này có thể tóm tắt trong các bước sau:
+
+Bước 1: server ứng dụng lựa chọn device cần thông báo, tiến hành lấy token đó kèm với tin nhắn dạng “data payload” đến cho phía Firebase server
+Bước 2: tại đây Firebase server sẽ xử lý và gửi tin nhắn đến đúng device cần nhận thông báo, Firebase server đóng vai trò như trung gian cho việc
+ gửi tin nhắn.
+Bước 3: ứng dụng của người dùng sẽ nhận được tin nhắn từ phía Firebase gửi dưới dạng “data payload”, lắng nghe các sự kiện từ hàm “onMessageReceived”,
+ phân tích và tạo notification đến người dùng.
+Trong bài viết này chúng ta không đi đến phần thiết lập tin nhắn cho phía server, do đó chúng ta sẽ dùng postman () để kiểm tra việc gửi tin nhắn dạng
+ payload. Các bước như sau:
+Bước 1: lấy token từ lúc chạy ứng dụng
+Bước 2: lấy Server Key từ Firebase Console để chúng ta có thể gửi thông điệp tới Firebase Console. Để lấy chúng ta vào Firebase Console
+ chọn Project Setting → Cloud Messaging
+Bước 4: sử dụng Postman
+Sử dụng Postman để gửi một POST message
+URL: https://fcm.googleapis.com/fcm/send
+Header:
+    Content-Type:application/json
+    Authorization:key="SERVER API KEY insert here"
+Body
+     
+{
+"notification": {
+"title": "Tiêu đề mess gửi đi", 
+ "body": "Nội dung"
+ },
+ "to" : "TOKEN"
+}

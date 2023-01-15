@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Ticket;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,4 +24,8 @@ public interface ITicketService {
     List<Ticket> searchNotDayFrom(String localFrom, String localTo, String dayFromTo, String garageId);
 
     List<Ticket> searchNotDayFromTo(String localFrom, String localTo, String dayFromFrom, String garageId);
+
+    Page<Ticket> findAllPage(Pageable pageable);
+
+    Page<Ticket> findAllPageAndSeach(String localFrom, String localTo, String dayFromFrom, String dayFromTo, String garageId, Pageable pageable);
 }

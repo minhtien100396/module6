@@ -4,6 +4,7 @@ import {GarageService} from "../../service/garage.service";
 import {Ticket} from "../../../model/ticket";
 import {Garage} from "../../../model/garage";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {PageTicket} from "../../../model/page-ticket";
 
 @Component({
   selector: 'app-ticket-list',
@@ -13,8 +14,9 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class TicketListComponent implements OnInit {
   ticketList: Ticket[] | undefined;
   garageList: Garage[] | undefined;
-  p: number = 1;
-  count: number = 3;
+  ticketPage: PageTicket;
+  // p: number = 1;
+  // count: number = 3;
   message: string | undefined;
   ticket: Ticket | undefined;
   ticketDetail: Ticket | undefined;
@@ -32,22 +34,17 @@ export class TicketListComponent implements OnInit {
     this._garageService.getListGarage().subscribe(
       garageData => {
         this.garageList = garageData;
-        this._ticketService.getListTicket().subscribe(
-          ticketData => {
-            this.ticketList = ticketData;
-            this.rfSearch = this._formBuilder.group(
-              {
-                localFrom: [''],
-                localTo: [''],
-                dayFromFrom: [''],
-                dayFromTo: [''],
-                garage: ['']
-              });
-            this.message = this._ticketService.message;
+        this.rfSearch = this._formBuilder.group(
+          {
+            localFrom: [''],
+            localTo: [''],
+            dayFromFrom: [''],
+            dayFromTo: [''],
+            garage: ['']
           });
+        this.onSearchAndPage();
+        this.message = this._ticketService.message;
       });
-
-
   }
 
   getTicket(idTicket: number) {
@@ -85,23 +82,39 @@ export class TicketListComponent implements OnInit {
       });
   }
 
+  onSearchAndPage() {
+    this._ticketService.searchAndPage(this.rfSearch.value, 0).subscribe(data => {
+      this.ticketPage = data;
+    });
+  }
+
   onOrder() {
     this._ticketService.findById(this.ticket.id).subscribe(
       data => {
         this.ticketOrder = data;
         if (this.ticketOrder.quantity <= 0) {
           this._ticketService.setMessage('Tickets sold out. Please choose another garage');
-          this.ngOnInit();
+          this.onSearchAndPage();
+          this.message = this._ticketService.message;
+
         } else {
           this.ticketOrder.quantity = this.ticketOrder.quantity - 1;
           this._ticketService.edit(this.ticketOrder.id, this.ticketOrder).subscribe(
             data => {
               this._ticketService.setMessage('You have successfully order your ticket. Thank you for choosing our service');
-              this.ngOnInit();
+              this.onSearchAndPage();
+              this.message = this._ticketService.message;
             }
           )
         }
       }
     )
   }
+
+  goToPage(i: number) {
+    this._ticketService.searchAndPage(this.rfSearch.value, i).subscribe(data => {
+      this.ticketPage = data;
+    });
+  }
+
 }

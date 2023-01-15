@@ -81,4 +81,25 @@ export class TicketService {
       '&dayFromFrom=' + rfSearch.dayFromFrom +
       '&dayFromTo=' + rfSearch.dayFromTo);
   }
+
+  findAllPage(pageNumber: number): Observable<any> {
+    return this._httpClient.get(environment.API_URL_TICKET + '/pg?page=' + pageNumber);
+  }
+
+  searchAndPage(rfSearch: any, pageNumber: any) {
+    if (!rfSearch.dayFromFrom) {
+      rfSearch.dayFromFrom = '1111-01-01'
+    }
+    if (!rfSearch.dayFromTo) {
+      rfSearch.dayFromTo = '9999-12-31'
+    }
+
+    return this._httpClient.get<any>(environment.API_URL_TICKET +
+      '/pg?page=' + pageNumber +
+      '&localFrom=' + rfSearch.localFrom +
+      '&localTo=' + rfSearch.localTo +
+      '&garageId=' + rfSearch.garage +
+      '&dayFromFrom=' + rfSearch.dayFromFrom +
+      '&dayFromTo=' + rfSearch.dayFromTo);
+  }
 }
